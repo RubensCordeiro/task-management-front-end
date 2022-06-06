@@ -1,28 +1,30 @@
 function TaskItem(props) {
-  const { detailed } = props;
+  const { task, detailed } = props;
+  const taskDate = new Date(task.due_date);
+  const today = new Date();
+
   return (
     <div className="w-full md:w-3/4 px-4 py-4 bg-zinc-50 border border-zinc-300 rounded cursor-pointer hover:shadow-lg transition duration-200 linear mb-4">
       <div className="flex justify-between content-center items-center">
-        <p className="font-bold">Task Title</p>
-        <p className="text-sm">Due: 01/01/2023</p>
+        <p className="font-bold">{task.title}</p>
+        <p className="text-sm">{taskDate.toLocaleDateString("pt-br")}</p>
       </div>
       <div className=" py-2">
         <p className="text-base font-bold">Summary:</p>
-        <p className="text-justify text-sm py-2">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi totam
-          in eveniet. Expedita, illum natus.
-        </p>
+        <p className="text-justify text-sm py-2">{task.summary}</p>
       </div>
       <div className="flex content-center items-center justify-center gap-x-8 border-y border-zinc-500">
         <ul className="flex gap-x-8 items-center content-center justify-center py-2 w-full text-xs">
           <li className="px-2 py-1 rounded-sm border border-zinc-700 text-center">
-            Low urgency
+            {task.urgent && "High Urgency"}
+            {task.urgent || "Low Urgency"}
           </li>
           <li className="px-2 py-1 rounded-sm border border-zinc-700 text-center">
             In Progress
           </li>
           <li className="px-2 py-1 rounded-sm border border-zinc-700 text-center">
-            On time
+            {taskDate <= today && "In time"}
+            {taskDate > today && "Late"}
           </li>
         </ul>
       </div>
