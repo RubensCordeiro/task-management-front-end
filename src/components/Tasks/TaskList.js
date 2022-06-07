@@ -15,7 +15,8 @@ function TaskList(props) {
   async function loadTasks(taskFilter, page, authToken) {
     const pageFilter = taskFilter || "all";
     const token = authToken;
-    const response = await TaskService.loadTasks(pageFilter, page, token);
+    const pageNumber = page || "1";
+    const response = await TaskService.loadTasks(pageFilter, pageNumber, token);
     setTasks(response);
   }
 

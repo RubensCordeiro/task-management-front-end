@@ -9,6 +9,7 @@ function TaskPage() {
 
       <Routes>
         <Route>
+          <Route index element={<TaskList />} />
           <Route path="/:page" element={<TaskList />} />
           <Route
             path="/urgent/:page"
