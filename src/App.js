@@ -6,6 +6,7 @@ import NavbarDesktop from "./components/UI/Navbar/NavbarDesktop";
 import GlobalContainer from "./components/UI/Layout/GlobalContainer";
 
 import TaskPage from "./pages/TaskPage";
+import TaskDetailsPage from "./pages/TaskDetailsPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <GlobalContainer>
           <Routes>
             <Route path="/tasks/*" element={<TaskPage />} />
+            <Route path="/tasks/task/:taskId" element={<TaskDetailsPage />} />
           </Routes>
         </GlobalContainer>
         <Footer />

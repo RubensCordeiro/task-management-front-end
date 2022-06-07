@@ -9,22 +9,41 @@ function TaskItem(props) {
         <p className="font-bold">{task.title}</p>
         <p className="text-sm">{taskDate.toLocaleDateString("pt-br")}</p>
       </div>
-      <div className=" py-2">
+      <div className="py-2">
         <p className="text-base font-bold">Summary:</p>
         <p className="text-justify text-sm py-2">{task.summary}</p>
       </div>
+      {detailed && (
+        <div className="py-2 ">
+          <p className="text-base font-bold">Description:</p>
+          <p className="text-justify text-sm py-2 break-words">
+            {task.description}
+          </p>
+        </div>
+      )}
       <div className="flex content-center items-center justify-center gap-x-8 border-y border-zinc-500">
         <ul className="flex gap-x-8 items-center content-center justify-center py-2 w-full text-xs">
-          <li className="px-2 py-1 rounded-sm border border-zinc-700 text-center">
-            {task.urgent && "High Urgency"}
-            {task.urgent || "Low Urgency"}
+          <li className="flex flex-col content-center items-center">
+            <p className="border-b border-zinc-700">Urgency</p>
+            <div className="px-2 rounded-sm text-center w-24 font-bold mt-1 text-zinc-800">
+              {task.urgent && "High"}
+              {task.urgent || "Low"}
+            </div>
           </li>
-          <li className="px-2 py-1 rounded-sm border border-zinc-700 text-center">
-            In Progress
+          <li className="flex flex-col content-center items-center">
+            <p className="border-b border-zinc-700">Priority</p>
+            <div className="px-2 rounded-sm text-center w-24 font-bold mt-1 text-zinc-800">
+              {task.priority.toUpperCase() === "LOW" && "Low"}
+              {task.priority.toUpperCase() === "MEDIUM" && "Medium"}
+              {task.priority.toUpperCase() === "HIGH" && "High"}
+            </div>
           </li>
-          <li className="px-2 py-1 rounded-sm border border-zinc-700 text-center">
-            {taskDate <= today && "In time"}
-            {taskDate > today && "Late"}
+          <li className="flex flex-col content-center items-center">
+            <p className="border-b border-zinc-700">Status</p>
+            <div className="px-2 rounded-sm text-center w-24 font-bold mt-1 text-zinc-800">
+              {taskDate <= today && "In time"}
+              {taskDate > today && "Late"}
+            </div>
           </li>
         </ul>
       </div>

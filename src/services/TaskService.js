@@ -12,6 +12,14 @@ class TaskService {
     );
     return response;
   }
+
+  async getTask(task_id, auth_token) {
+    const response = await this.httpClient.get(
+      `/api/v1/tasks/task/${task_id}`,
+      auth_token
+    );
+    return response;
+  }
 }
 
 export default new TaskService();

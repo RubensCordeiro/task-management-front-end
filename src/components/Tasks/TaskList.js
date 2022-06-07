@@ -1,6 +1,6 @@
 import TaskItem from "./TaskItem";
-
 import TaskService from "../../services/TaskService";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
@@ -25,7 +25,12 @@ function TaskList(props) {
   }, [taskFilter, page]);
 
   const taskList = tasks.map((task) => (
-    <TaskItem detailed={false} task={task} key={task.id} />
+    <Link
+      to={`/tasks/task/${task.id}`}
+      className="w-full flex items-center content-center justify-center"
+    >
+      <TaskItem detailed={false} task={task} key={task.id} />
+    </Link>
   ));
 
   return (
