@@ -8,8 +8,8 @@ function FormInput(props) {
   const [wasInputTouched, setWasInputTouched] = useState(false);
 
   function inputValueHandler(e) {
-    setIsInputValid(validationFunction(e.target.value));
     setInputValue(e.target.value);
+    setIsInputValid(validationFunction(e.target.value));
     invalidityStateLifter(validationFunction(e.target.value));
   }
 

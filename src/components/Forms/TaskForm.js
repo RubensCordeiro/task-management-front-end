@@ -27,7 +27,13 @@ function TaskForm() {
         validationFunction={isInputEmpty}
         invalidityStateLifter={(e) => setTitleValid(e)}
       />
-      <FieldSet fieldId="task-summary" inputType="text" labelText="Summary" />
+      <FieldSet
+        fieldId="task-summary"
+        inputType="text"
+        labelText="Summary"
+        validationFunction={(e) => true} //Unvalidated inputs
+        invalidityStateLifter={(e) => true} //Unvalidated inputs
+      />
       <FieldSet
         fieldId="due_date"
         inputType="date"
