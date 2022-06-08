@@ -1,3 +1,5 @@
+import FormInput from "./FormInput";
+
 function CheckBox(props) {
   const { fieldId, inputType, labelText } = props;
 
@@ -6,7 +8,7 @@ function CheckBox(props) {
       <label htmlFor={fieldId} className="text-center">
         {labelText}
       </label>
-      <input type={inputType} id={fieldId} className="cursor-pointer" />
+      <FormInput type={inputType} id={fieldId} styles="cursor-pointer" />
     </fieldset>
   );
 }

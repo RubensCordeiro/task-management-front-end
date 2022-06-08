@@ -1,3 +1,4 @@
+import FormInput from "./FormInput";
 function InlineFieldSet(props) {
   const { fieldId, inputType, labelText } = props;
 
@@ -7,10 +8,10 @@ function InlineFieldSet(props) {
         {labelText}
       </label>
       {inputType !== "textarea" && (
-        <input
+        <FormInput
           type={inputType}
           id={fieldId}
-          className="bg-zinc-100 border border-zinc-400 rounded-sm py-1 px-2 text-sm shadow-sm w-full"
+          styles="bg-zinc-100 border border-zinc-400 rounded-sm py-1 px-2 text-sm shadow-sm w-full"
         />
       )}
       {inputType === "textarea" && (

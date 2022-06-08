@@ -1,5 +1,13 @@
+import FormInput from "./FormInput";
+
 function FieldSet(props) {
-  const { fieldId, inputType, labelText } = props;
+  const {
+    fieldId,
+    inputType,
+    labelText,
+    validationFunction,
+    invalidityStateLifter,
+  } = props;
 
   return (
     <fieldset className="flex flex-col items-center justify-start gap-x-2">
@@ -7,10 +15,12 @@ function FieldSet(props) {
         {labelText}
       </label>
       {inputType !== "textarea" && (
-        <input
+        <FormInput
           type={inputType}
           id={fieldId}
-          className="bg-zinc-100 border border-zinc-400 rounded-sm py-1 px-2 text-sm shadow-sm w-full"
+          styles="bg-zinc-100 border border-zinc-400 rounded-sm py-1 px-2 text-sm shadow-sm w-full"
+          validationFunction={validationFunction}
+          invalidityStateLifter={invalidityStateLifter}
         />
       )}
       {inputType === "textarea" && (
