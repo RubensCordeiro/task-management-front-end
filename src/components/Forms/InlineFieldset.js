@@ -1,6 +1,22 @@
+import { useState } from "react";
 import FormInput from "./FormInput";
+
 function InlineFieldSet(props) {
-  const { fieldId, inputType, labelText } = props;
+  const {
+    fieldId,
+    inputType,
+    labelText,
+    validationFunction,
+    invalidityStateLifter,
+    placeholder,
+    inputValueSet,
+  } = props;
+
+  const [description, setDescription] = useState("");
+  function textInputHandler(e) {
+    setDescription(e.target.value);
+    inputValueSet(e.target.value);
+  }
 
   return (
     <fieldset className="flex items-center justify-start gap-x-2">
@@ -12,13 +28,19 @@ function InlineFieldSet(props) {
           type={inputType}
           id={fieldId}
           styles="bg-zinc-100 border border-zinc-400 rounded-sm py-1 px-2 text-sm shadow-sm w-full"
+          validationFunction={validationFunction}
+          invalidityStateLifter={invalidityStateLifter}
+          placeholder={placeholder}
+          inputValueSet={inputValueSet}
         />
       )}
       {inputType === "textarea" && (
         <textarea
-          id="task-description"
+          id={fieldId}
           className="bg-zinc-100 border
           border-zinc-400 rounded-sm py-1 px-2 text-sm shadow-sm w-full h-16"
+          onChange={textInputHandler}
+          value={description}
         />
       )}
     </fieldset>

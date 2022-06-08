@@ -1,20 +1,30 @@
 import { useState } from "react";
 
 function FormInput(props) {
-  const { type, id, styles, validationFunction, invalidityStateLifter } = props;
+  const {
+    type,
+    id,
+    styles,
+    validationFunction,
+    invalidityStateLifter,
+    inputValueSet,
+  } = props;
 
   const [inputValue, setInputValue] = useState("");
   const [isInputValid, setIsInputValid] = useState(false);
   const [wasInputTouched, setWasInputTouched] = useState(false);
 
   function inputValueHandler(e) {
-    setInputValue(e.target.value);
-    setIsInputValid(validationFunction(e.target.value));
-    invalidityStateLifter(validationFunction(e.target.value));
+    setInputValue(e.target.value || e.target.checked);
+    inputValueSet(e.target.value || e.target.checked);
+    if (!validationFunction || !invalidityStateLifter) return;
+    const validationResult = validationFunction(e.target.value);
+    setIsInputValid(validationResult);
+    invalidityStateLifter(validationResult);
   }
 
   function inputStyles() {
-    if (!validationFunction) return "";
+    if (!validationFunction || !invalidityStateLifter) return "";
     const invalidityCheck = !isInputValid && wasInputTouched;
     return invalidityCheck ? "bg-red-100 border border-red-800" : "";
   }
