@@ -7,6 +7,7 @@ import GlobalContainer from "./components/UI/Layout/GlobalContainer";
 
 import TaskPage from "./pages/TaskPage";
 import TaskDetailsPage from "./pages/TaskDetailsPage";
+import NewTaskPage from "./pages/NewTaskPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Routes>
             <Route path="/tasks/*" element={<TaskPage />} />
             <Route path="/tasks/task/:taskId" element={<TaskDetailsPage />} />
+            <Route path="/tasks/new" element={<NewTaskPage />} />
           </Routes>
         </GlobalContainer>
         <Footer />
