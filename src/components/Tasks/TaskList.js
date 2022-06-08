@@ -28,8 +28,9 @@ function TaskList(props) {
     <Link
       to={`/tasks/task/${task.id}`}
       className="w-full flex items-center content-center justify-center"
+      key={task.id + task.user_id}
     >
-      <TaskItem detailed={false} task={task} key={task.id} />
+      <TaskItem detailed={false} task={task} />
     </Link>
   ));
 

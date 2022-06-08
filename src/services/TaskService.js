@@ -18,6 +18,7 @@ class TaskService {
       `/api/v1/tasks/task/${task_id}`,
       auth_token
     );
+
     return response;
   }
 }

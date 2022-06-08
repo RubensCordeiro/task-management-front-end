@@ -24,8 +24,11 @@ function TaskDetailsPage() {
     <section>
       <TaskHeader />
       <div className="mt-2 px-4 py-2 bg-zinc-100 rounded-sm overflow-y-auto mx-auto flex flex-col items-center content-center">
-        {task && <TaskItem task={task} detailed={true} />}
         {!task && <p>Loading...</p>}
+        {task.error && (
+          <p className="text-zinc-900 font-semibold">{task.error}</p>
+        )}
+        {task.title && <TaskItem task={task} detailed={true} />}
       </div>
     </section>
   );

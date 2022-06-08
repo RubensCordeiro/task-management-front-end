@@ -1,6 +1,7 @@
 class HttpClient {
   constructor(baseUrl) {
     this.baseUrl = baseUrl;
+    this.handledErrors = [403];
   }
 
   async get(path, auth_token) {
@@ -10,7 +11,6 @@ class HttpClient {
         "Content-Type": "application/json",
       },
     });
-
     return response.json();
   }
 }
