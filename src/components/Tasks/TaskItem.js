@@ -22,7 +22,7 @@ function TaskItem(props) {
         </div>
       )}
       <div className="flex content-center items-center justify-center gap-x-8 border-y border-zinc-500">
-        <ul className="flex gap-x-8 items-center content-center justify-center py-2 w-full text-xs">
+        <ul className="flex items-center content-center justify-center py-2 w-full text-xs">
           <li className="flex flex-col content-center items-center">
             <p className="border-b border-zinc-700">Urgency</p>
             <div className="px-2 rounded-sm text-center w-24 font-bold mt-1 text-zinc-800">

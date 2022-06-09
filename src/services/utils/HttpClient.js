@@ -13,6 +13,18 @@ class HttpClient {
     });
     return response.json();
   }
+
+  async post(path, auth_token, payload) {
+    const response = await fetch(`${this.baseUrl}${path}`, {
+      method: "POST",
+      headers: {
+        Authorization: auth_token,
+        "Content-Type": "application/json",
+      },
+      body: payload,
+    });
+    return response.json();
+  }
 }
 
 export default HttpClient;

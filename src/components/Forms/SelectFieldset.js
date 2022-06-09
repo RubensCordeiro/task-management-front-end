@@ -1,11 +1,7 @@
-import { useState } from "react";
-
 function SelectFieldset(props) {
   const { fieldId, labelText, optionItems, inputValueSet } = props;
-  const [selectInput, setSelectInput] = useState("");
 
   function selectChangeHandler(e) {
-    setSelectInput(e.target.value.toLowerCase());
     inputValueSet(e.target.value.toLowerCase());
   }
 

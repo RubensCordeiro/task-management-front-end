@@ -15,10 +15,18 @@ class TaskService {
 
   async getTask(task_id, auth_token) {
     const response = await this.httpClient.get(
-      `/api/v1/tasks/task/${task_id}`,
+      `api/v1/tasks/task/${task_id}`,
       auth_token
     );
+    return response;
+  }
 
+  async createTask(task, auth_token) {
+    const response = await this.httpClient.post(
+      "api/v1/tasks",
+      auth_token,
+      JSON.stringify({ task: task })
+    );
     return response;
   }
 }
