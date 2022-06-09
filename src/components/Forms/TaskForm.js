@@ -1,6 +1,7 @@
 import FieldSet from "./Fieldset";
 import CheckBox from "./CheckBox";
 import FormSubmitButton from "./FormSubmitButton";
+import SelectFieldset from "./SelectFieldset";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
@@ -29,6 +30,7 @@ function TaskForm() {
       description,
       priority,
     };
+    console.log(data);
     navigate("/tasks");
   }
 
@@ -73,12 +75,12 @@ function TaskForm() {
           labelText="Urgent?"
           inputValueSet={(e) => setUrgency(e)}
         />
-        {/* <InlineFieldSet
-          fieldId="task-priority"
-          inputType="text"
-          labelText="Priority"
+        <SelectFieldset
+          fieldId={"priorities"}
+          labelText={"Priority"}
+          optionItems={["Low", "Medium", "High"]}
           inputValueSet={(e) => setPriority(e)}
-        /> */}
+        ></SelectFieldset>
       </div>
       {buttonDisabled || <FormSubmitButton>Create Task</FormSubmitButton>}
     </form>
