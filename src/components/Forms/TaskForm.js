@@ -5,6 +5,8 @@ import SelectFieldset from "./SelectFieldset";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
+import TaskService from "../../services/TaskService";
+
 function TaskForm() {
   const [titleValid, setTitleValid] = useState(false);
   const [dueDateValid, setDueDateValid] = useState(false);
@@ -20,18 +22,25 @@ function TaskForm() {
 
   const isInputEmpty = (input) => input.length > 0;
 
+  const authToken =
+    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7InVzZXJfaWQiOjJ9fQ.-CUJfiV9Qak_8ICWejNe44arw3qChMkAj0s68AFbp8g";
+
+  async function createTask(task, authToken) {
+    const response = await TaskService.createTask(task, authToken);
+  }
+
   function submitHandler(e) {
     e.preventDefault();
-    const data = {
+    const task = {
       title,
       summary,
       due_date: dueDate,
-      urgency,
+      urgent: urgency,
       description,
-      priority,
+      priority: priority || "low",
     };
-    console.log(data);
-    navigate("/tasks");
+    createTask(task, authToken);
+    // navigate("/tasks");
   }
 
   return (
