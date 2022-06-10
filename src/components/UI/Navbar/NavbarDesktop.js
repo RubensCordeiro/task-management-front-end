@@ -15,7 +15,7 @@ function NavbarDesktop() {
 
   return (
     <nav
-      className={`flex justify-between px-8 py-2 rounded-sm sticky top-0 z-50 ${navColor} transition duration-200 linear`}
+      className={`flex justify-between px-8 py-2 rounded-sm sticky top-0 z-10 ${navColor} transition duration-200 linear z-40`}
     >
       <div className="nav-menu w-16 cursor-pointer">
         <p className="text-2xl">

@@ -1,97 +1,132 @@
-import FieldSet from "./Fieldset";
-import CheckBox from "./CheckBox";
-import FormSubmitButton from "./FormSubmitButton";
-import SelectFieldset from "./SelectFieldset";
 import { useState } from "react";
-import { useNavigate } from "react-router";
-
-import TaskService from "../../services/TaskService";
+import Checkbox from "./Checkbox";
+import Fieldset from "./Fieldset";
+import Textarea from "./Textarea";
+import Input from "./Input";
+import InlineFieldset from "./InlineFieldset";
+import InlineSelect from "./InlineSelect";
+import Button from "../UI/Buttons/Button";
+import useErrors from "../../hooks/useErrors";
 
 function TaskForm() {
-  const [titleValid, setTitleValid] = useState(false);
-  const [dueDateValid, setDueDateValid] = useState(false);
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [dueDate, setDueDate] = useState("");
-  const [urgency, setUrgency] = useState("");
   const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState("");
-  const buttonDisabled = titleValid & dueDateValid ? false : true;
+  const [urgency, setUrgency] = useState(false);
+  const [priority, setPriority] = useState("low");
+  const { setError, removeError, getErrorMessage, hasError } = useErrors();
 
-  const navigate = useNavigate();
+  function handleTitleChange(value) {
+    setTitle(value);
 
-  const isInputEmpty = (input) => input.length > 0;
-
-  const authToken =
-    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7InVzZXJfaWQiOjJ9fQ.-CUJfiV9Qak_8ICWejNe44arw3qChMkAj0s68AFbp8g";
-
-  async function createTask(task, authToken) {
-    const response = await TaskService.createTask(task, authToken);
+    if (!value) {
+      setError({ field: "title", message: "Title must not be empty." });
+    } else {
+      removeError("title");
+    }
   }
 
-  function submitHandler(e) {
-    e.preventDefault();
-    const task = {
-      title,
-      summary,
-      due_date: dueDate,
-      urgent: urgency,
-      description,
-      priority: priority || "low",
-    };
-    createTask(task, authToken);
-    // navigate("/tasks");
+  function handleTitleBlur() {
+    if (!title) {
+      setError({ field: "title", message: "Title must not be empty." });
+    }
+  }
+
+  function handleDateChange(value) {
+    setDueDate(value);
+
+    if (!value) {
+      setError({ field: "date", message: "Date must not be empty." });
+    } else {
+      removeError("date");
+    }
+  }
+
+  function handleDateBlur() {
+    if (!dueDate) {
+      setError({ field: "date", message: "Date must not be empty." });
+    }
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
   }
 
   return (
     <form
-      onSubmit={submitHandler}
       className="mt-2 bg-zinc-50 p-4 rounded-sm border border-zinc-400 shadow-lg max-w-xl mx-auto flex flex-col gap-y-2"
+      onSubmit={handleSubmit}
     >
-      <FieldSet
-        fieldId="task-title"
-        inputType="text"
-        labelText="Task title"
-        validationFunction={isInputEmpty}
-        invalidityStateLifter={(e) => setTitleValid(e)}
-        placeholder={"Task Title"}
-        inputValueSet={(e) => setTitle(e)}
-      />
-      <FieldSet
-        fieldId="task-summary"
-        inputType="text"
-        labelText="Summary"
-        inputValueSet={(e) => setSummary(e)}
-      />
-      <FieldSet
-        fieldId="due_date"
-        inputType="date"
-        labelText="Due date"
-        validationFunction={isInputEmpty}
-        invalidityStateLifter={(e) => setDueDateValid(e)}
-        inputValueSet={(e) => setDueDate(e)}
-      />
-      <FieldSet
-        fieldId="description"
-        inputType="textarea"
-        labelText="Description"
-        inputValueSet={(e) => setDescription(e)}
-      />
-      <div className="flex items-center justify-center gap-x-8 mt-1">
-        <CheckBox
-          fieldId="task-urgency"
-          inputType="checkbox"
-          labelText="Urgent?"
-          inputValueSet={(e) => setUrgency(e)}
+      <Fieldset label={"Title"} error={getErrorMessage("title")}>
+        <Input
+          inputParams={{
+            type: "text",
+            id: "Title",
+            placeholder: "Your task title",
+            value: title,
+          }}
+          error={hasError("title")}
+          changeHandler={(e) => handleTitleChange(e)}
+          blurHandler={handleTitleBlur}
         />
-        <SelectFieldset
-          fieldId={"priorities"}
-          labelText={"Priority"}
-          optionItems={["Low", "Medium", "High"]}
-          inputValueSet={(e) => setPriority(e)}
-        ></SelectFieldset>
+      </Fieldset>
+      <Fieldset label={"Summary"}>
+        <Input
+          inputParams={{
+            type: "text",
+            id: "Summary",
+            placeholder: "Task Summary",
+            value: summary,
+          }}
+          changeHandler={(e) => setSummary(e)}
+        />
+      </Fieldset>
+      <Fieldset label={"Due-Date"} error={getErrorMessage("date")}>
+        <Input
+          inputParams={{
+            type: "date",
+            id: "Due-Date",
+            value: dueDate,
+          }}
+          error={hasError("date")}
+          changeHandler={(e) => handleDateChange(e)}
+          blurHandler={handleDateBlur}
+        />
+      </Fieldset>
+      <Fieldset label={"Description"}>
+        <Textarea
+          inputParams={{
+            name: "Description",
+            id: "Description",
+            value: description,
+          }}
+          changeHandler={(e) => setDescription(e)}
+        />
+      </Fieldset>
+      <div className="flex gap-x-4 items-center justify-center gap-x-16">
+        <InlineFieldset label={"Urgency"}>
+          <Checkbox
+            inputParams={{
+              id: "urgent",
+              value: urgency,
+            }}
+            changeHandler={(e) => setUrgency(e)}
+          />
+        </InlineFieldset>
+        <InlineFieldset label={"Priority"}>
+          <InlineSelect
+            inputParams={{
+              name: "Priority",
+              id: "Priority",
+              options: ["Low", "Medium", "High"],
+              value: priority,
+            }}
+            changeHandler={(e) => setPriority(e)}
+          />
+        </InlineFieldset>
       </div>
-      {buttonDisabled || <FormSubmitButton>Create Task</FormSubmitButton>}
+      <Button type={"submit"}>Create task</Button>
     </form>
   );
 }

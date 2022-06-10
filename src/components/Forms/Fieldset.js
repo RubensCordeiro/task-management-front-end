@@ -1,50 +1,16 @@
-import { useState } from "react";
-import FormInput from "./FormInput";
-
-function FieldSet(props) {
-  const {
-    fieldId,
-    inputType,
-    labelText,
-    validationFunction,
-    invalidityStateLifter,
-    placeholder,
-    inputValueSet,
-  } = props;
-
-  const [description, setDescription] = useState("");
-  function textInputHandler(e) {
-    setDescription(e.target.value);
-    inputValueSet(e.target.value);
-  }
-
+export default function Fieldset(props) {
+  const { label, children, error } = props;
   return (
     <fieldset className="flex flex-col items-center justify-start gap-x-2">
-      <label htmlFor={fieldId} className="text-center">
-        {labelText}
+      <label htmlFor={label} className="text-center">
+        {label}
       </label>
-      {inputType !== "textarea" && (
-        <FormInput
-          type={inputType}
-          id={fieldId}
-          styles="bg-zinc-100 border border-zinc-400 rounded-sm py-1 px-2 text-sm shadow-sm w-full"
-          validationFunction={validationFunction}
-          invalidityStateLifter={invalidityStateLifter}
-          placeholder={placeholder}
-          inputValueSet={inputValueSet}
-        />
-      )}
-      {inputType === "textarea" && (
-        <textarea
-          id={fieldId}
-          className="bg-zinc-100 border
-          border-zinc-400 rounded-sm py-1 px-2 text-sm shadow-sm w-full h-16"
-          onChange={textInputHandler}
-          value={description}
-        />
+      {children}
+      {error && (
+        <span className="mt-1 text-sm text-red-700 font-bold self-start px-2">
+          {error}
+        </span>
       )}
     </fieldset>
   );
 }
-
-export default FieldSet;
