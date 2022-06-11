@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function TaskItem(props) {
   const { task, detailed } = props;
   const taskDate = new Date(task.due_date);
@@ -53,7 +55,7 @@ function TaskItem(props) {
         <div className="mt-3">
           <ul className="flex content-center items-center justify-center gap-x-8">
             <li className="hover:text-teal-700 cursor-pointer font-medium">
-              Edit Task
+              <Link to={`/tasks/edit/${task.id}`}>Edit Task</Link>
             </li>
             <li className="hover:text-red-700 cursor-pointer font-medium">
               Delete Task

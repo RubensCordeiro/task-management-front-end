@@ -29,6 +29,15 @@ class TaskService {
     );
     return response;
   }
+
+  async editTask(taskId, task, auth_token) {
+    const response = await this.httpClient.patch(
+      `api/v1/tasks/${taskId}`,
+      auth_token,
+      JSON.stringify({ task: task })
+    );
+    return response;
+  }
 }
 
 export default new TaskService();

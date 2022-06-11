@@ -25,6 +25,18 @@ class HttpClient {
     });
     return response.json();
   }
+
+  async patch(path, auth_token, payload) {
+    const response = await fetch(`${this.baseUrl}${path}`, {
+      method: "PATCH",
+      headers: {
+        Authorization: auth_token,
+        "Content-Type": "application/json",
+      },
+      body: payload,
+    });
+    return response.json();
+  }
 }
 
 export default HttpClient;

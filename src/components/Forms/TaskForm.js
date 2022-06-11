@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import Checkbox from "./Checkbox";
 import Fieldset from "./Fieldset";
@@ -10,7 +10,8 @@ import Button from "../UI/Buttons/Button";
 import useErrors from "../../hooks/useErrors";
 import TaskService from "../../services/TaskService";
 
-function TaskForm() {
+function TaskForm(props) {
+  const { baseTask } = props;
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [dueDate, setDueDate] = useState("");
@@ -23,8 +24,8 @@ function TaskForm() {
   const buttonAvailable =
     !hasError("title") &
     !hasError("date") &
-    (title.length > 0) &
-    (dueDate.length > 0);
+    (title?.length > 0) &
+    (dueDate?.length > 0);
 
   function handleTitleChange(value) {
     setTitle(value);
@@ -67,6 +68,12 @@ function TaskForm() {
     nav("/tasks/1");
   }
 
+  async function editTask(taskId, task, authToken) {
+    await TaskService.editTask(taskId, task, authToken);
+    alert("Task editted successfully");
+    nav("/tasks/1");
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
     const task = {
@@ -77,8 +84,33 @@ function TaskForm() {
       urgent: urgency,
       priority,
     };
-    createtask(task, authToken);
+
+    if (!baseTask) {
+      createtask(task, authToken);
+    } else {
+      editTask(baseTask.id, task, authToken);
+    }
   }
+
+  useEffect(() => {
+    setTitle(baseTask?.title || "");
+    setSummary(baseTask?.summary || "");
+    setDueDate(
+      (baseTask?.due_date &&
+        new Date(baseTask?.due_date).toISOString().split("T")[0]) ||
+        ""
+    );
+    setDescription(baseTask?.description || "");
+    setPriority(baseTask?.priority || "low");
+    setUrgency(baseTask?.urgent || false);
+  }, [
+    baseTask?.title,
+    baseTask?.summary,
+    baseTask?.due_date,
+    baseTask?.description,
+    baseTask?.urgent,
+    baseTask?.priority,
+  ]);
 
   return (
     <>
@@ -138,6 +170,7 @@ function TaskForm() {
               inputParams={{
                 id: "urgent",
                 value: urgency,
+                checked: baseTask?.urgent || false,
               }}
               changeHandler={(e) => setUrgency(e)}
             />
@@ -154,7 +187,13 @@ function TaskForm() {
             />
           </InlineFieldset>
         </div>
-        {buttonAvailable ? <Button type={"submit"}>Create task</Button> : ""}
+        {buttonAvailable ? (
+          <Button type={"submit"}>
+            {baseTask ? "Edit Task" : "Create Task"}
+          </Button>
+        ) : (
+          ""
+        )}
       </form>
     </>
   );

@@ -5,7 +5,8 @@ export default function Checkbox(props) {
     <input
       type="checkbox"
       id={inputParams.id}
-      value={inputParams.value}
+      // value={inputParams.value}
+      checked={inputParams.value}
       onChange={(e) => changeHandler(e.target.checked)}
     />
   );
