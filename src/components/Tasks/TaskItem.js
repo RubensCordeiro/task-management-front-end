@@ -1,9 +1,45 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import Dialog from "../UI/Dialog/Dialog";
+import { useNavigate } from "react-router";
+import TaskService from "../../services/TaskService";
 
 function TaskItem(props) {
   const { task, detailed } = props;
   const taskDate = new Date(task.due_date);
   const today = new Date();
+  const [deleteAttempt, setDeleteAttemtp] = useState(false);
+  const nav = useNavigate();
+
+  const authToken =
+    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7InVzZXJfaWQiOjJ9fQ.-CUJfiV9Qak_8ICWejNe44arw3qChMkAj0s68AFbp8g";
+
+  async function deleteTask(taskId, authToken) {
+    await TaskService.deleteTask(taskId, authToken);
+  }
+
+  async function finishTask() {
+    await TaskService.editTask(
+      task.id,
+      {
+        finished: true,
+      },
+      authToken
+    );
+  }
+
+  function taskFinishHandler() {
+    finishTask();
+    alert("Task Finished");
+    nav("/tasks/1");
+  }
+
+  function taskDeletionHandler() {
+    deleteTask(task.id, authToken);
+    setDeleteAttemtp(false);
+    alert("Task deleted!");
+    nav("/tasks/1");
+  }
 
   return (
     <div className="w-full md:w-3/4 px-4 py-4 bg-zinc-50 border border-zinc-300 rounded cursor-pointer hover:shadow-lg transition duration-200 linear mb-4">
@@ -57,14 +93,32 @@ function TaskItem(props) {
             <li className="hover:text-teal-700 cursor-pointer font-medium">
               <Link to={`/tasks/edit/${task.id}`}>Edit Task</Link>
             </li>
-            <li className="hover:text-red-700 cursor-pointer font-medium">
+            <li
+              className="hover:text-red-700 cursor-pointer font-medium"
+              onClick={() => {
+                setDeleteAttemtp(true);
+              }}
+            >
               Delete Task
             </li>
-            <li className="hover:text-teal-700 cursor-pointer font-medium">
-              Mark as finished
-            </li>
+            {task.finished || (
+              <li
+                className="hover:text-teal-700 cursor-pointer font-medium"
+                onClick={taskFinishHandler}
+              >
+                Mark as finished
+              </li>
+            )}
           </ul>
         </div>
+      )}
+      {deleteAttempt && (
+        <Dialog
+          confirmLabel="Delete Task"
+          cancelLabel="Cancel"
+          onCancel={() => setDeleteAttemtp(false)}
+          onConfirm={taskDeletionHandler}
+        />
       )}
     </div>
   );

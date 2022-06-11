@@ -38,6 +38,14 @@ class TaskService {
     );
     return response;
   }
+
+  async deleteTask(taskId, auth_token) {
+    const response = await this.httpClient.delete(
+      `api/v1/tasks/${taskId}`,
+      auth_token
+    );
+    return response;
+  }
 }
 
 export default new TaskService();

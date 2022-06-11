@@ -188,7 +188,7 @@ function TaskForm(props) {
           </InlineFieldset>
         </div>
         {buttonAvailable ? (
-          <Button type={"submit"}>
+          <Button type={"submit"} color="teal">
             {baseTask ? "Edit Task" : "Create Task"}
           </Button>
         ) : (

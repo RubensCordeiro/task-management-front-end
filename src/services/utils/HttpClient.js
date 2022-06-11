@@ -37,6 +37,17 @@ class HttpClient {
     });
     return response.json();
   }
+
+  async delete(path, auth_token) {
+    const response = await fetch(`${this.baseUrl}${path}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: auth_token,
+        "Content-Type": "application/json",
+      },
+    });
+    return response.json();
+  }
 }
 
 export default HttpClient;
