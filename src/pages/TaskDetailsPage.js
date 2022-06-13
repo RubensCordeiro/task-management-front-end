@@ -3,6 +3,7 @@ import TaskHeader from "../components/Tasks/TaskHeader";
 import { useParams } from "react-router";
 import TaskService from "../services/TaskService";
 import { useEffect, useState } from "react";
+import GlobalContainer from "../components/UI/Layout/GlobalContainer";
 
 function TaskDetailsPage() {
   const [task, setTask] = useState("");
@@ -21,7 +22,7 @@ function TaskDetailsPage() {
   }, [taskId]);
 
   return (
-    <section>
+    <GlobalContainer>
       <TaskHeader />
       <div className="mt-2 px-4 pt-4 bg-zinc-100 rounded-sm overflow-y-auto mx-auto flex flex-col items-center content-center">
         {!task && <p>Loading...</p>}
@@ -30,7 +31,7 @@ function TaskDetailsPage() {
         )}
         {task.title && <TaskItem task={task} detailed={true} />}
       </div>
-    </section>
+    </GlobalContainer>
   );
 }
 

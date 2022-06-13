@@ -8,6 +8,8 @@ function TaskList(props) {
   const { taskFilter } = props;
   const [tasks, setTasks] = useState([]);
   const { page } = useParams();
+  const [pageNumber, setPageNumber] = useState(page);
+  const [nextPageTasks, setNextPageTask] = useState(0);
 
   const authToken =
     "Bearer eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7InVzZXJfaWQiOjJ9fQ.-CUJfiV9Qak_8ICWejNe44arw3qChMkAj0s68AFbp8g";
@@ -15,14 +17,20 @@ function TaskList(props) {
   async function loadTasks(taskFilter, page, authToken) {
     const pageFilter = taskFilter || "all";
     const token = authToken;
-    const pageNumber = page || "1";
+    const pageNumber = page || 1;
     const response = await TaskService.loadTasks(pageFilter, pageNumber, token);
+    const nextPageTasks = await TaskService.loadTasks(
+      pageFilter,
+      parseInt(pageNumber) + 1,
+      token
+    );
     setTasks(response);
+    setNextPageTask(nextPageTasks);
   }
 
   useEffect(() => {
-    loadTasks(taskFilter, page, authToken);
-  }, [taskFilter, page]);
+    loadTasks(taskFilter, pageNumber, authToken);
+  }, [taskFilter, pageNumber]);
 
   const taskList = tasks.map((task) => (
     <Link

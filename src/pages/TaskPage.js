@@ -1,10 +1,11 @@
 import { Route, Routes } from "react-router";
+import GlobalContainer from "../components/UI/Layout/GlobalContainer";
 import TaskHeader from "../components/Tasks/TaskHeader";
 import TaskList from "../components/Tasks/TaskList";
 
 function TaskPage() {
   return (
-    <section>
+    <GlobalContainer>
       <TaskHeader />
 
       <Routes>
@@ -37,7 +38,7 @@ function TaskPage() {
           />
         </Route>
       </Routes>
-    </section>
+    </GlobalContainer>
   );
 }
 

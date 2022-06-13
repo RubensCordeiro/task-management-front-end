@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useParams } from "react-router";
 import TaskForm from "../components/Forms/TaskForm";
 import TaskService from "../services/TaskService";
+import GlobalContainer from "../components/UI/Layout/GlobalContainer";
 import { useEffect } from "react";
 
 const authToken =
@@ -21,7 +22,7 @@ export default function EditTaskPage() {
   }, [taskId]);
 
   return (
-    <section className="mt-8">
+    <GlobalContainer>
       {task.error && (
         <p className="mb-2 text-center p-4 bg-red-200 rounded-sm">
           {task.error}
@@ -33,6 +34,6 @@ export default function EditTaskPage() {
           <TaskForm baseTask={task} />
         </>
       )}
-    </section>
+    </GlobalContainer>
   );
 }
