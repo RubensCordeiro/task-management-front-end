@@ -2,12 +2,23 @@ import Backdrop from "../Backdrop/Backdrop";
 import { Link } from "react-router-dom";
 
 export default function Sidebar(props) {
-  const { onHideSidebar } = props;
+  const { onHideSidebar, visible } = props;
+
   return (
     <>
-      <Backdrop onCancel={onHideSidebar} />
-      <aside className="absolute top-0 left-0 w-48 h-screen bg-zinc-100 border-r border-zinc-400 rounded-sm z-50">
+      {visible && <Backdrop onCancel={onHideSidebar} />}
+      <aside
+        className={`absolute top-0 w-48 -left-48 h-screen bg-zinc-100 border-r border-zinc-400 rounded-sm z-50 ${
+          visible ? "translate-x-48" : "translate-x-0"
+        } transition linear duration-300`}
+      >
         <ul className="flex flex-col items-start py-8 gap-y-2 text-lg">
+          <li
+            className="cursor-pointer hover:bg-zinc-300 hover:shadow-lg font-medium w-full px-4 py-2"
+            onClick={onHideSidebar}
+          >
+            <Link to="/">Home</Link>
+          </li>
           <li
             className="cursor-pointer hover:bg-zinc-300 hover:shadow-lg font-medium w-full px-4 py-2"
             onClick={onHideSidebar}

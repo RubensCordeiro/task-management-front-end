@@ -38,9 +38,10 @@ function NavbarDesktop() {
       <div className="nav-options w-16">
         <p className="text-lg sm:text-xl">Login</p>
       </div>
-      {sidebarVisible && (
-        <Sidebar onHideSidebar={() => setSidebarVisible(false)} />
-      )}
+      <Sidebar
+        visible={sidebarVisible}
+        onHideSidebar={() => setSidebarVisible(false)}
+      />
     </nav>
   );
 }
