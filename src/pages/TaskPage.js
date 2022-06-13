@@ -31,6 +31,10 @@ function TaskPage() {
             path="/next_week/:page"
             element={<TaskList taskFilter={"next_week"} />}
           />
+          <Route
+            path="/finished/:page"
+            element={<TaskList taskFilter={"finished"} />}
+          />
         </Route>
       </Routes>
     </section>

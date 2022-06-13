@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import Sidebar from "../Sidebar/Sidebar";
 
 function NavbarDesktop() {
   const [navColor, setNavColor] = useState("bg-transparent");
+  const [sidebarVisible, setSidebarVisible] = useState(false);
 
   function scrollStateHandler() {
     window.scrollY >= 50
@@ -23,6 +25,7 @@ function NavbarDesktop() {
             <FontAwesomeIcon
               icon={faBars}
               className="text-zinc-800 hover:text-zinc-500 transition linear duration-200"
+              onClick={() => setSidebarVisible(true)}
             />
           }
         </p>
@@ -35,6 +38,9 @@ function NavbarDesktop() {
       <div className="nav-options w-16">
         <p className="text-lg sm:text-xl">Login</p>
       </div>
+      {sidebarVisible && (
+        <Sidebar onHideSidebar={() => setSidebarVisible(false)} />
+      )}
     </nav>
   );
 }
