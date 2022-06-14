@@ -1,8 +1,15 @@
 import Backdrop from "../Backdrop/Backdrop";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Sidebar(props) {
   const { onHideSidebar, visible } = props;
+  const nav = useNavigate();
+
+  function goToPage(link) {
+    nav(link);
+    window.location.reload();
+  }
 
   return (
     <>
@@ -15,51 +22,45 @@ export default function Sidebar(props) {
         <ul className="flex flex-col items-start py-8 gap-y-2 text-lg">
           <li
             className="cursor-pointer hover:bg-zinc-300 hover:shadow-lg font-medium w-full px-4 py-2"
-            onClick={onHideSidebar}
+            onClick={() => goToPage("/tasks")}
           >
-            <Link to="/">Home</Link>
+            <p>All</p>
           </li>
           <li
             className="cursor-pointer hover:bg-zinc-300 hover:shadow-lg font-medium w-full px-4 py-2"
-            onClick={onHideSidebar}
+            onClick={() => goToPage("/tasks/urgent")}
           >
-            <Link to="/tasks/1">All tasks</Link>
+            <p>Urgent</p>
           </li>
           <li
             className="cursor-pointer hover:bg-zinc-300 hover:shadow-lg font-medium w-full px-4 py-2"
-            onClick={onHideSidebar}
+            onClick={() => goToPage("/tasks/late")}
           >
-            <Link to="/tasks/urgent/1">Urgent tasks</Link>
+            <p>Late</p>
           </li>
           <li
             className="cursor-pointer hover:bg-zinc-300 hover:shadow-lg font-medium w-full px-4 py-2"
-            onClick={onHideSidebar}
+            onClick={() => goToPage("/tasks/today")}
           >
-            <Link to="/tasks/late/1">Late tasks</Link>
+            <p>Today</p>
           </li>
           <li
             className="cursor-pointer hover:bg-zinc-300 hover:shadow-lg font-medium w-full px-4 py-2"
-            onClick={onHideSidebar}
+            onClick={() => goToPage("/tasks/tomorrow")}
           >
-            <Link to="/tasks/today/1">Today tasks</Link>
+            <p>Tomorrow</p>
           </li>
           <li
             className="cursor-pointer hover:bg-zinc-300 hover:shadow-lg font-medium w-full px-4 py-2"
-            onClick={onHideSidebar}
+            onClick={() => goToPage("/tasks/next_week")}
           >
-            <Link to="/tasks/tomorrow/1">Tomorrow tasks</Link>
+            <p>Next Week</p>
           </li>
           <li
             className="cursor-pointer hover:bg-zinc-300 hover:shadow-lg font-medium w-full px-4 py-2"
-            onClick={onHideSidebar}
+            onClick={() => goToPage("/tasks/finished")}
           >
-            <Link to="/tasks/next_week/1">Next Week tasks</Link>
-          </li>
-          <li
-            className="cursor-pointer hover:bg-zinc-300 hover:shadow-lg font-medium w-full px-4 py-2"
-            onClick={onHideSidebar}
-          >
-            <Link to="/tasks/finished/1">Finished tasks</Link>
+            <p>Finished</p>
           </li>
         </ul>
       </aside>
