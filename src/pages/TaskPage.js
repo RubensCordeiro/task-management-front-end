@@ -11,29 +11,20 @@ function TaskPage() {
       <Routes>
         <Route>
           <Route index element={<TaskList />} />
-          <Route path="/:page" element={<TaskList />} />
+          <Route path="/" element={<TaskList />} />
+          <Route path="/urgent" element={<TaskList taskFilter={"urgent"} />} />
+          <Route path="/late" element={<TaskList taskFilter={"late"} />} />
+          <Route path="/today" element={<TaskList taskFilter={"today"} />} />
           <Route
-            path="/urgent/:page"
-            element={<TaskList taskFilter={"urgent"} />}
-          />
-          <Route
-            path="/late/:page"
-            element={<TaskList taskFilter={"late"} />}
-          />
-          <Route
-            path="/today/:page"
-            element={<TaskList taskFilter={"today"} />}
-          />
-          <Route
-            path="/tomorrow/:page"
+            path="/tomorrow"
             element={<TaskList taskFilter={"tomorrow"} />}
           />
           <Route
-            path="/next_week/:page"
+            path="/next_week"
             element={<TaskList taskFilter={"next_week"} />}
           />
           <Route
-            path="/finished/:page"
+            path="/finished"
             element={<TaskList taskFilter={"finished"} />}
           />
         </Route>

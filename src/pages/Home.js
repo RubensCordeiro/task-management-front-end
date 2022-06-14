@@ -37,6 +37,7 @@ export default function Home() {
           </li>
         </ul>
       </article>
+      <article className="bg-gradient-to-r from-teal-700 to-teal-50 w-full h-16"></article>
     </section>
   );
 }
