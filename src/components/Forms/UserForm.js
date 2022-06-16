@@ -5,6 +5,7 @@ import Input from "./Input";
 import Button from "../UI/Buttons/Button";
 import useErrors from "../../hooks/useErrors";
 import InputHandler from "../../utils/InputHandler";
+import UserService from "../../services/UserService";
 
 export default function UserForm() {
   const baseUser = false;
@@ -12,6 +13,8 @@ export default function UserForm() {
   const [email, setEmail] = useState("");
   const [username, setUsename] = useState("");
   const [password, setPassword] = useState("");
+  const [timer, setTimer] = useState(null);
+  // eslint-disable-next-line
   const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/;
 
   const isButtonEnabled =
@@ -19,6 +22,23 @@ export default function UserForm() {
     !hasError("username") &&
     !hasError("password") &&
     ![email.length, username.length, password.length].includes(0);
+
+  async function checkEmail(email) {
+    const response = await UserService.checkEmailExistense(email);
+    if (response === true) {
+      setError({
+        field: "email",
+        message: "Email is already in use",
+        mode: "include",
+      });
+    } else if (response === false) {
+      setError({
+        field: "email",
+        message: "Email is already in use",
+        mode: "remove",
+      });
+    }
+  }
 
   function handleEmailChange(email) {
     setEmail(email);
@@ -38,6 +58,14 @@ export default function UserForm() {
       errorMessage: "Email has wrong format",
       errorExists: hasError("email"),
     });
+
+    clearTimeout(timer);
+
+    const newTimer = setTimeout(() => {
+      checkEmail(email);
+    }, 500);
+
+    setTimer(newTimer);
   }
 
   function handleUsername(username) {
@@ -69,6 +97,7 @@ export default function UserForm() {
       length: 10,
     });
   }
+
   return (
     <GlobalContainer>
       <p className="mb-2 w-full text-center">Create your account</p>
