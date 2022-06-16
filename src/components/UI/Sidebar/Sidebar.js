@@ -22,6 +22,12 @@ export default function Sidebar(props) {
         <ul className="flex flex-col items-start py-8 gap-y-2 text-lg">
           <li
             className="cursor-pointer hover:bg-zinc-300 hover:shadow-lg font-medium w-full px-4 py-2"
+            onClick={() => goToPage("/")}
+          >
+            <p>Home</p>
+          </li>
+          <li
+            className="cursor-pointer hover:bg-zinc-300 hover:shadow-lg font-medium w-full px-4 py-2"
             onClick={() => goToPage("/tasks")}
           >
             <p>All</p>

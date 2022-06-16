@@ -8,6 +8,7 @@ import TaskPage from "./pages/TaskPage";
 import TaskDetailsPage from "./pages/TaskDetailsPage";
 import NewTaskPage from "./pages/NewTaskPage";
 import EditTaskPage from "./pages/EditTaskPage";
+import RegisterPage from "./pages/RegisterPage";
 import Home from "./pages/Home";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/tasks/task/:taskId" element={<TaskDetailsPage />} />
           <Route path="/tasks/new" element={<NewTaskPage />} />
           <Route path="/tasks/edit/:taskId" element={<EditTaskPage />} />
+          <Route path="/register" element={<RegisterPage />} />
         </Routes>
         <Footer />
       </BrowserRouter>

@@ -9,6 +9,7 @@ import InlineSelect from "./InlineSelect";
 import Button from "../UI/Buttons/Button";
 import useErrors from "../../hooks/useErrors";
 import TaskService from "../../services/TaskService";
+import InputHandler from "../../utils/InputHandler";
 
 function TaskForm(props) {
   const { baseTask } = props;
@@ -18,7 +19,7 @@ function TaskForm(props) {
   const [description, setDescription] = useState("");
   const [urgency, setUrgency] = useState(false);
   const [priority, setPriority] = useState("low");
-  const { setError, removeError, getErrorMessage, hasError } = useErrors();
+  const { setError, hasError, getErrorMessages } = useErrors();
   const nav = useNavigate();
 
   const buttonAvailable =
@@ -27,36 +28,26 @@ function TaskForm(props) {
     (title?.length > 0) &
     (dueDate?.length > 0);
 
-  function handleTitleChange(value) {
-    setTitle(value);
-
-    if (!value) {
-      setError({ field: "title", message: "Title must not be empty." });
-    } else {
-      removeError("title");
-    }
+  function handleTitleChange(title) {
+    setTitle(title);
+    InputHandler.emptyFieldErrorHandler({
+      inputValue: title,
+      setErrorFunction: setError,
+      fieldName: "title",
+      errorMessage: "Title must not be empty",
+      errorExists: hasError("title"),
+    });
   }
 
-  function handleTitleBlur() {
-    if (!title) {
-      setError({ field: "title", message: "Title must not be empty." });
-    }
-  }
-
-  function handleDateChange(value) {
-    setDueDate(value);
-
-    if (!value) {
-      setError({ field: "date", message: "Date must not be empty." });
-    } else {
-      removeError("date");
-    }
-  }
-
-  function handleDateBlur() {
-    if (!dueDate) {
-      setError({ field: "date", message: "Date must not be empty." });
-    }
+  function handleDateChange(date) {
+    setDueDate(date);
+    InputHandler.emptyFieldErrorHandler({
+      inputValue: dueDate,
+      setErrorFunction: setError,
+      fieldName: "date",
+      errorMessage: "Date must not be empty",
+      errorExists: hasError("date"),
+    });
   }
 
   const authToken =
@@ -118,7 +109,7 @@ function TaskForm(props) {
         className="mt-2 bg-zinc-50 p-4 rounded-sm border border-zinc-400 shadow-lg max-w-xl mx-auto flex flex-col gap-y-2"
         onSubmit={handleSubmit}
       >
-        <Fieldset label={"Title"} error={getErrorMessage("title")}>
+        <Fieldset label={"Title"} errors={getErrorMessages("title")}>
           <Input
             inputParams={{
               type: "text",
@@ -127,8 +118,16 @@ function TaskForm(props) {
               value: title,
             }}
             error={hasError("title")}
-            changeHandler={(e) => handleTitleChange(e)}
-            blurHandler={handleTitleBlur}
+            changeHandler={(title) => handleTitleChange(title)}
+            blurHandler={() =>
+              InputHandler.blurHandler({
+                inputValue: title,
+                setErrorFunction: setError,
+                fieldName: "title",
+                errorMessage: "Title must not be empty",
+                errorExists: hasError("title"),
+              })
+            }
           />
         </Fieldset>
         <Fieldset label={"Summary"}>
@@ -142,7 +141,7 @@ function TaskForm(props) {
             changeHandler={(e) => setSummary(e)}
           />
         </Fieldset>
-        <Fieldset label={"Due-Date"} error={getErrorMessage("date")}>
+        <Fieldset label={"Due-Date"} errors={getErrorMessages("date")}>
           <Input
             inputParams={{
               type: "date",
@@ -150,8 +149,16 @@ function TaskForm(props) {
               value: dueDate,
             }}
             error={hasError("date")}
-            changeHandler={(e) => handleDateChange(e)}
-            blurHandler={handleDateBlur}
+            changeHandler={(date) => handleDateChange(date)}
+            blurHandler={() =>
+              InputHandler.blurHandler({
+                inputValue: dueDate,
+                setErrorFunction: setError,
+                fieldName: "date",
+                errorMessage: "Date must not be empty",
+                errorExists: hasError("date"),
+              })
+            }
           />
         </Fieldset>
         <Fieldset label={"Description"}>
