@@ -98,10 +98,17 @@ export default function UserForm() {
     });
   }
 
+  function handleSubmit(event) {
+    event.preventDefault();
+  }
+
   return (
     <GlobalContainer>
       <p className="mb-2 w-full text-center">Create your account</p>
-      <form className="mt-2 bg-zinc-50 p-4 rounded-sm border border-zinc-400 shadow-lg max-w-xl mx-auto flex flex-col gap-y-2">
+      <form
+        className="mt-2 bg-zinc-50 p-4 rounded-sm border border-zinc-400 shadow-lg max-w-xl mx-auto flex flex-col gap-y-2"
+        onSubmit={handleSubmit}
+      >
         <Fieldset label={"Username"} errors={getErrorMessages("username")}>
           <Input
             inputParams={{

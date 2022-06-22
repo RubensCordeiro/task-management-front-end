@@ -11,8 +11,7 @@ function TaskItem(props) {
   const [deleteAttempt, setDeleteAttemtp] = useState(false);
   const nav = useNavigate();
 
-  const authToken =
-    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7InVzZXJfaWQiOjJ9fQ.-CUJfiV9Qak_8ICWejNe44arw3qChMkAj0s68AFbp8g";
+  const authToken = `Bearer ${localStorage.getItem("authToken")}`;
 
   async function deleteTask(taskId, authToken) {
     await TaskService.deleteTask(taskId, authToken);

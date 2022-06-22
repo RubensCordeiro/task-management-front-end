@@ -50,8 +50,7 @@ function TaskForm(props) {
     });
   }
 
-  const authToken =
-    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7InVzZXJfaWQiOjJ9fQ.-CUJfiV9Qak_8ICWejNe44arw3qChMkAj0s68AFbp8g";
+  const authToken = `Bearer ${localStorage.getItem("authToken")}`;
 
   async function createtask(task, authToken) {
     await TaskService.createTask(task, authToken);

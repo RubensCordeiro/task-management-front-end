@@ -9,8 +9,7 @@ function TaskDetailsPage() {
   const [task, setTask] = useState("");
   const { taskId } = useParams();
 
-  const authToken =
-    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7InVzZXJfaWQiOjJ9fQ.-CUJfiV9Qak_8ICWejNe44arw3qChMkAj0s68AFbp8g";
+  const authToken = `Bearer ${localStorage.getItem("authToken")}`;
 
   async function getTask(taskId, authToken) {
     const response = await TaskService.getTask(taskId, authToken);

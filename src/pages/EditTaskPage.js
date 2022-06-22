@@ -5,8 +5,7 @@ import TaskService from "../services/TaskService";
 import GlobalContainer from "../components/UI/Layout/GlobalContainer";
 import { useEffect } from "react";
 
-const authToken =
-  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7InVzZXJfaWQiOjJ9fQ.-CUJfiV9Qak_8ICWejNe44arw3qChMkAj0s68AFbp8g";
+const authToken = `Bearer ${localStorage.getItem("authToken")}`;
 
 export default function EditTaskPage() {
   const { taskId } = useParams();

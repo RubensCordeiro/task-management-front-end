@@ -10,8 +10,7 @@ function TaskList(props) {
   const [nextPageTasks, setNextPageTask] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
 
-  const authToken =
-    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7InVzZXJfaWQiOjJ9fQ.-CUJfiV9Qak_8ICWejNe44arw3qChMkAj0s68AFbp8g";
+  const authToken = `Bearer ${localStorage.getItem("authToken")}`;
 
   async function loadTasks(taskFilter, page, authToken) {
     const pageFilter = taskFilter || "all";
