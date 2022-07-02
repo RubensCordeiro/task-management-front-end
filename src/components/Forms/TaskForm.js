@@ -55,7 +55,7 @@ function TaskForm(props) {
   async function createtask(task, authToken) {
     await TaskService.createTask(task, authToken);
     alert("Task Created successfully");
-    nav("/tasks/1");
+    nav("/tasks");
   }
 
   async function editTask(taskId, task, authToken) {

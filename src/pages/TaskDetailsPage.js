@@ -18,12 +18,12 @@ function TaskDetailsPage() {
 
   useEffect(() => {
     getTask(taskId, authToken);
-  }, [taskId]);
+  }, [taskId, authToken]);
 
   return (
     <GlobalContainer>
       <TaskHeader />
-      <div className="mt-2 px-4 pt-4 bg-zinc-100 rounded-sm overflow-y-auto mx-auto flex flex-col items-center content-center">
+      <div className="mt-2 px-4 py-4 bg-zinc-100 rounded-sm overflow-y-auto mx-auto flex flex-col items-center content-center">
         {!task && <p>Loading...</p>}
         {task.error && (
           <p className="text-zinc-900 font-semibold">{task.error}</p>

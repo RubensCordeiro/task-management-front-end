@@ -2,13 +2,15 @@ import TaskItem from "./TaskItem";
 import TaskService from "../../services/TaskService";
 import Pagination from "../UI/Pagination/Pagination";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { authContext } from "../../contexts/authContext";
 
 function TaskList(props) {
   const { taskFilter } = props;
   const [tasks, setTasks] = useState([]);
   const [nextPageTasks, setNextPageTask] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
+  const { loading } = useContext(authContext);
 
   const authToken = `Bearer ${localStorage.getItem("authToken")}`;
 
@@ -28,7 +30,7 @@ function TaskList(props) {
 
   useEffect(() => {
     loadTasks(taskFilter, pageNumber, authToken);
-  }, [taskFilter, pageNumber]);
+  }, [taskFilter, pageNumber, authToken]);
 
   const taskList = tasks.map((task) => (
     <Link
@@ -47,7 +49,8 @@ function TaskList(props) {
           <p className="text-sm">New Task</p>
         </Link>
       </button>
-      {tasks.length > 0 && (
+      {loading && (<p>Loading data...</p>)}
+      {loading || (tasks.length > 0 && (
         <>
           <Pagination
             currentPage={pageNumber}
@@ -63,8 +66,8 @@ function TaskList(props) {
             taskFilter={taskFilter}
           />
         </>
-      )}
-      {tasks.length === 0 && <p>No tasks here.</p>}
+      ))}
+      {loading || (tasks.length === 0 && <p>No tasks here.</p>)}
     </div>
   );
 }

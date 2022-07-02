@@ -43,7 +43,7 @@ function TaskItem(props) {
   return (
     <div className="w-full md:w-3/4 px-4 py-4 bg-zinc-50 border border-zinc-300 rounded cursor-pointer hover:shadow-lg transition duration-200 linear">
       <div className="flex justify-between content-center items-center">
-        <p className="font-bold">{task.id}</p>
+        <p className="font-bold">{task.title}</p>
         <p className="text-sm">
           Due date: {taskDate.toLocaleDateString("pt-br")}
         </p>

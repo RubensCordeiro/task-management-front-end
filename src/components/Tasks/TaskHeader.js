@@ -22,7 +22,7 @@ function TaskHeader() {
 
   function goToPage(link) {
     nav(link);
-    window.location.reload();
+    // window.location.reload();
   }
 
   return (

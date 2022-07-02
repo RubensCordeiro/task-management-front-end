@@ -30,8 +30,12 @@ export default function LoginForm() {
   async function handleSubmit(e) {
     e.preventDefault();
     const authResponse = await authenticateUser({ username, password });
-    handleLogin(authResponse.token);
-    nav("/tasks");
+    if (authResponse.error) {
+      alert('Wrong Username or password, try Again')
+    } else {
+      handleLogin(authResponse.token);
+      nav("/tasks");
+    }
   }
 
   return (
