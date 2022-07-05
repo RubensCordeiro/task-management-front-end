@@ -10,7 +10,7 @@ export default function Sidebar(props) {
 
   function goToPage(link) {
     nav(link);
-    // window.location.reload();
+    window.location.reload();
   }
 
   return (

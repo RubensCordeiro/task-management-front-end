@@ -16,13 +16,18 @@ function AuthProvider({ children }) {
     setLoading(false);
   }, []);
 
-  async function handleLogin(loginResponse) {
+  function handleLogin(loginResponse) {
     setAuthenticated(true);
     localStorage.setItem("authToken", loginResponse);
   }
 
+  function handleLogout() {
+    setAuthenticated(false);
+    localStorage.removeItem("authToken")
+  }
+
   return (
-    <authContext.Provider value={{ authenticated, handleLogin, loading }}>
+    <authContext.Provider value={{ authenticated, handleLogin, loading, handleLogout }}>
       {children}
     </authContext.Provider>
   );

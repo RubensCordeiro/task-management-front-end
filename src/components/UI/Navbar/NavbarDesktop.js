@@ -1,16 +1,26 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
+import { authContext } from "../../../contexts/authContext";
 
 function NavbarDesktop() {
   const [navColor, setNavColor] = useState("bg-transparent");
   const [sidebarVisible, setSidebarVisible] = useState(false);
+  const { authenticated, handleLogout } = useContext(authContext);
+  const nav = useNavigate();
 
   function scrollStateHandler() {
     window.scrollY >= 50
       ? setNavColor("bg-gray-100 shadow-xl")
       : setNavColor("bg-transparent");
+  }
+
+  function logout(){
+    handleLogout();
+    nav('/');
   }
 
   window.addEventListener("scroll", scrollStateHandler);
@@ -36,7 +46,10 @@ function NavbarDesktop() {
         </p>
       </div>
       <div className="nav-options w-16">
-        <p className="text-lg sm:text-xl">Login</p>
+        {authenticated || <Link to='/login'>
+          <p className="text-lg sm:text-xl">Login</p>
+        </Link>}
+        {authenticated && <p className="text-lg sm:text-xl cursor-pointer hover:text-red-900" onClick={logout}>Logout</p>}
       </div>
       <Sidebar
         visible={sidebarVisible}
