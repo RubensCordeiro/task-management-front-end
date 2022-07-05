@@ -28,9 +28,9 @@ function App() {
             <Route path="/tasks/task/:taskId" element={<TaskDetailsPage />} />
             <Route path="/tasks/new" element={<NewTaskPage />} />
             <Route path="/tasks/edit/:taskId" element={<EditTaskPage />} />
-            <Route path="/register" element={<RegisterPage />} />
           </>}
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
           <Route path="*" element={<Home />} /> 
         </Routes>
         <Footer />

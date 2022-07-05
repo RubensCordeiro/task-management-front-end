@@ -6,6 +6,7 @@ import Button from "../UI/Buttons/Button";
 import useErrors from "../../hooks/useErrors";
 import InputHandler from "../../utils/InputHandler";
 import UserService from "../../services/UserService";
+import { useNavigate } from "react-router";
 
 export default function UserForm() {
   const baseUser = false;
@@ -14,6 +15,7 @@ export default function UserForm() {
   const [username, setUsename] = useState("");
   const [password, setPassword] = useState("");
   const [timer, setTimer] = useState(null);
+  const nav = useNavigate();
   // eslint-disable-next-line
   const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/;
 
@@ -24,7 +26,7 @@ export default function UserForm() {
     ![email.length, username.length, password.length].includes(0);
 
   async function checkEmail(email) {
-    const response = await UserService.checkEmailExistense(email);
+    const response = await UserService.checkEmailExistence(email);
     if (response === true) {
       setError({
         field: "email",
@@ -38,6 +40,12 @@ export default function UserForm() {
         mode: "remove",
       });
     }
+  }
+
+  async function createUser(userData) {
+    await UserService.createUser(userData)
+    alert('User created successfully!');
+    nav('/tasks');
   }
 
   function handleEmailChange(email) {
@@ -98,8 +106,12 @@ export default function UserForm() {
     });
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
+  function handleSubmit(e) {
+    e.preventDefault();
+    const user = {
+      username, password, email
+    };
+    createUser(user);
   }
 
   return (
