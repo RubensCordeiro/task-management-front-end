@@ -2,7 +2,7 @@ import HttpClient from "./utils/HttpClient";
 
 class UserService {
   constructor(baseUrl) {
-    this.httpClient = new HttpClient("http://127.0.0.1:3000/");
+    this.httpClient = new HttpClient(process.env.REACT_APP_API_URL);
   }
 
   async checkEmailExistence(email) {

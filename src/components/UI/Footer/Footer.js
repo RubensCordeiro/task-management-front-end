@@ -21,7 +21,7 @@ function Footer() {
           />
         </li> */}
         <li>
-          <a href={'www.instagram.com/rubens2c/'}>
+          <a href={'https://www.instagram.com/rubens2c/'}>
             <FontAwesomeIcon
               icon={faInstagram}
               className="text-2xl text-zinc-300 hover:text-zinc-50 hover:shadow-xl transition linear duration-200 cursor-pointer hover:shadow-lg hover:shadow-zinc-50"
