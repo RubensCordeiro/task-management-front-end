@@ -10,13 +10,14 @@ function TaskList(props) {
   const [tasks, setTasks] = useState([]);
   const [nextPageTasks, setNextPageTask] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
-  const [loadingData, setLoading] = useState(false);
+  const [loadingTasks, setLoadingTasks] = useState(true);
   const { loading } = useContext(authContext);
+
+  const isLoading = loading || loadingTasks;
 
   const authToken = `Bearer ${localStorage.getItem("authToken")}`;
 
   async function loadTasks(taskFilter, page, authToken) {
-    setLoading(true);
     const pageFilter = taskFilter || "all";
     const token = authToken;
     const pageNumber = page || 1;
@@ -28,7 +29,7 @@ function TaskList(props) {
     );
     setTasks(response);
     setNextPageTask(nextPageTasks);
-    setLoading(false);
+    setLoadingTasks(false);
   }
 
   useEffect(() => {
@@ -45,6 +46,7 @@ function TaskList(props) {
     </Link>
   ));
 
+
   return (
     <div className="mt-2 px-4 py-2 bg-zinc-100 rounded-sm overflow-y-auto mx-auto flex flex-col items-center content-center gap-y-4">
       <button className="py-2 px-4 bg-teal-800 rounded text-white border border-transparent-700 mb-2 hover:bg-zinc-50 hover:text-teal-700 hover:border hover:border-teal-700 transition linear duration-150">
@@ -52,7 +54,8 @@ function TaskList(props) {
           <p className="text-sm">New Task</p>
         </Link>
       </button>
-      {(loading || loadingData) && (<p>Loading data...</p>)}
+      {isLoading && (<p>Loading data...</p>)}
+      {isLoading || (tasks.length === 0 && <p>No tasks here...</p>)}
       {loading || (tasks.length > 0 && (
         <>
           <Pagination
@@ -61,8 +64,7 @@ function TaskList(props) {
             onChangePage={(page) => setPageNumber(page)}
             taskFilter={taskFilter}
           />
-          {taskList.length === 0 && <p>No tasks here.</p>}
-          {taskList.length > 0 && taskList}
+          {taskList}
           <Pagination
             currentPage={pageNumber}
             nextPageTasks={nextPageTasks}
