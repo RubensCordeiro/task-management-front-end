@@ -10,11 +10,13 @@ function TaskList(props) {
   const [tasks, setTasks] = useState([]);
   const [nextPageTasks, setNextPageTask] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
+  const [loadingData, setLoading] = useState(false);
   const { loading } = useContext(authContext);
 
   const authToken = `Bearer ${localStorage.getItem("authToken")}`;
 
   async function loadTasks(taskFilter, page, authToken) {
+    setLoading(true);
     const pageFilter = taskFilter || "all";
     const token = authToken;
     const pageNumber = page || 1;
@@ -26,6 +28,7 @@ function TaskList(props) {
     );
     setTasks(response);
     setNextPageTask(nextPageTasks);
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -49,7 +52,7 @@ function TaskList(props) {
           <p className="text-sm">New Task</p>
         </Link>
       </button>
-      {loading && (<p>Loading data...</p>)}
+      {(loading || loadingData) && (<p>Loading data...</p>)}
       {loading || (tasks.length > 0 && (
         <>
           <Pagination
