@@ -50,13 +50,7 @@ function NavbarDesktop() {
           <ul className="flex align-center items-center justify-between gap-x-2">
             <li>
               <Link to='/login'>
-                <p className="text-lg sm:text-xl hover:text-teal-800">Login</p>
-              </Link>
-            </li>
-            <li>|</li>
-            <li>
-              <Link to='/register'>
-              <p className="text-lg sm:text-xl hover:text-teal-800">Register</p>
+                <p className="text-lg sm:text-sm hover:text-teal-800">Login</p>
               </Link>
             </li>
           </ul>

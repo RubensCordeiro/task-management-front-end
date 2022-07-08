@@ -2,6 +2,7 @@ import GlobalContainer from "../UI/Layout/GlobalContainer";
 import Input from "./Input";
 import Fieldset from "./Fieldset";
 import Button from "../UI/Buttons/Button";
+import { Link } from "react-router-dom";
 import { authContext } from "../../contexts/authContext";
 
 import AuthenticationService from "../../services/AuthenticationService";
@@ -74,6 +75,7 @@ export default function LoginForm() {
           </Button>
         )}
       </form>
+      <h3 className="mt-2 text-center">Not registered? <Link to="/register" className="text-blue-700 font-bold">Sign up</Link></h3>
     </GlobalContainer>
   );
 }
