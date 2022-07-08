@@ -61,7 +61,8 @@ function TaskList(props) {
             onChangePage={(page) => setPageNumber(page)}
             taskFilter={taskFilter}
           />
-          {taskList}
+          {taskList.length === 0 && <p>No tasks here.</p>}
+          {taskList.length > 0 && taskList}
           <Pagination
             currentPage={pageNumber}
             nextPageTasks={nextPageTasks}
@@ -70,7 +71,7 @@ function TaskList(props) {
           />
         </>
       ))}
-      {(!loading && !loadingData) || (tasks.length === 0 && <p>No tasks here.</p>)}
+      {/* {(!loading && !loadingData) || (tasks.length === 0 && <p>No tasks here.</p>)} */}
     </div>
   );
 }
