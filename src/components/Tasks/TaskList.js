@@ -70,7 +70,7 @@ function TaskList(props) {
           />
         </>
       ))}
-      {loading || (tasks.length === 0 && <p>No tasks here.</p>)}
+      {(!loading && !loadingData) || (tasks.length === 0 && <p>No tasks here.</p>)}
     </div>
   );
 }
