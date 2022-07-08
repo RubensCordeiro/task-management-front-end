@@ -27,18 +27,22 @@ export default function Sidebar(props) {
           >
             <p>Home</p>
           </li>
-          <li
-            className="cursor-pointer hover:bg-zinc-300 hover:shadow-lg font-medium w-full px-4 py-2"
-            onClick={() => goToPage("/login")}
-          >
-            <p>Login</p>
-          </li>
-          <li
-            className="cursor-pointer hover:bg-zinc-300 hover:shadow-lg font-medium w-full px-4 py-2"
-            onClick={() => goToPage("/register")}
-          >
-            <p>Register</p>
-          </li>
+          {
+            !authenticated && <>
+              <li
+                className="cursor-pointer hover:bg-zinc-300 hover:shadow-lg font-medium w-full px-4 py-2"
+                onClick={() => goToPage("/login")}
+              >
+                <p>Login</p>
+              </li>
+              <li
+                className="cursor-pointer hover:bg-zinc-300 hover:shadow-lg font-medium w-full px-4 py-2"
+                onClick={() => goToPage("/register")}
+              >
+                <p>Register</p>
+              </li>
+            </>
+          }
           {
             authenticated && <>
               <li
